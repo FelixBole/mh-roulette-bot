@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "description": "Discord bot for Monster Hunter weapon randomizer",
   "main": "dist/index.js",
-  "type": "module",
   "engines": {
     "node": ">=18.x"
   },
