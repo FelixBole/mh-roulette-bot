@@ -1,4 +1,5 @@
 import {
+	InteractionResponseFlags,
 	InteractionResponseType,
 	InteractionType,
 	MessageComponentTypes,
@@ -29,6 +30,13 @@ import { validateWeaponShort } from "../validators";
 import { IUser } from "../models/User.model";
 import { HydratedDocument } from "mongoose";
 import { getWeaponEmojiShortcode } from "../constants/emoji.constants";
+import {
+	getServerFavoriteWeaponStats,
+	getServerMainWeaponStats,
+	getServerWeaponBanStats,
+	getServerWeaponDrawStats,
+	WeaponStats,
+} from "../helpers/stats";
 
 /**
  * Handles all interactions with the bot
@@ -151,6 +159,18 @@ export const handleInteractions = async (
 		if (name === COMMAND_NAMES.GET_MULTI_RANDOM_WEAPONS_FROM_FAV)
 			return handleGetMultiRandomWeaponsFromFavorites(res, data, user);
 
+		if (name === COMMAND_NAMES.GET_SERVER_WEAPON_DRAW_STATS)
+			return handleStats(res, guildId, "draw");
+
+		if (name === COMMAND_NAMES.GET_SERVER_WEAPON_POPULARITY_STATS)
+			return handleStats(res, guildId, "popularity");
+
+		if (name === COMMAND_NAMES.GET_SERVER_WEAPON_MAIN_STATS)
+			return handleStats(res, guildId, "mains");
+
+		if (name === COMMAND_NAMES.GET_SERVER_WEAPON_BAN_STATS)
+			return handleStats(res, guildId, "ban");
+
 		console.error(`unknown command: ${name}`);
 		return res.status(400).json({ error: "unknown command" });
 	}
@@ -178,13 +198,14 @@ const handleGetRandomWeaponFromFavorites = async (
 ) => {
 	if (user.favorite_weapons.length === 0) {
 		return res.send({
-			type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+			type: InteractionResponseType.UPDATE_MESSAGE,
 			data: {
 				content: `You have no favorite weapons`,
+				flags: InteractionResponseFlags.EPHEMERAL,
 			},
 		});
 	}
-	
+
 	const weapon = getRandomWeaponFromUserFavorites(user);
 	const updatedUser = await updateUserWeaponStats(userId, weapon, user);
 	const drawAmount = getUserWeaponDrawAmount(updatedUser, weapon);
@@ -202,6 +223,7 @@ const handleGetMultiRandomWeaponsFromFavorites = async (
 			type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 			data: {
 				content: `You have no favorite weapons`,
+				flags: InteractionResponseFlags.EPHEMERAL,
 			},
 		});
 	}
@@ -221,7 +243,7 @@ const handleGetMultiRandomWeaponsFromFavorites = async (
 				.join(" | ")}`,
 		},
 	});
-}
+};
 
 const handleListUserBannedWeapons = async (
 	res: Response,
@@ -232,12 +254,15 @@ const handleListUserBannedWeapons = async (
 	const content =
 		userBannedWeapons.length === 0
 			? "No banned weapons"
-			: `Banned weapons: ${userBannedWeapons.join(", ")}`;
+			: `Banned weapons: ${userBannedWeapons
+					.map((w) => `${getWeaponEmojiShortcode(w)} ${w}`)
+					.join(" | ")}`;
 
 	return res.send({
 		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 		data: {
 			content,
+			flags: InteractionResponseFlags.EPHEMERAL,
 		},
 	});
 };
@@ -253,6 +278,7 @@ const handleUnbanAllWeapons = async (
 		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 		data: {
 			content: `Unbanned all weapons`,
+			flags: InteractionResponseFlags.EPHEMERAL,
 		},
 	});
 };
@@ -268,6 +294,7 @@ const handleSetMainWeapon = async (
 			type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 			data: {
 				content: `Invalid weapon: ${weapon}`,
+				flags: InteractionResponseFlags.EPHEMERAL,
 			},
 		});
 	}
@@ -278,7 +305,10 @@ const handleSetMainWeapon = async (
 	return res.send({
 		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 		data: {
-			content: `Set main weapon to ${weapon}`,
+			content: `Set main weapon to ${getWeaponEmojiShortcode(
+				weapon
+			)} ${weapon}`,
+			flags: InteractionResponseFlags.EPHEMERAL,
 		},
 	});
 };
@@ -301,6 +331,67 @@ const handleGetMultiRandomWeapons = async (
 			content: `Random weapons: ${weapons
 				.map((w) => `${getWeaponEmojiShortcode(w)} ${w}`)
 				.join(" | ")}`,
+		},
+	});
+};
+
+const handleStats = async (
+	res: Response,
+	guildId: string,
+	type: "draw" | "ban" | "popularity" | "mains"
+) => {
+	let stats: WeaponStats[] = [];
+	let title: string = "";
+
+	switch (type) {
+		case "draw":
+			stats = await getServerWeaponDrawStats(guildId);
+			title = "Draw stats";
+			break;
+
+		case "ban":
+			stats = await getServerWeaponBanStats(guildId);
+			title = "Ban stats";
+			break;
+
+		case "popularity":
+			stats = await getServerFavoriteWeaponStats(guildId);
+			title = "Popularity stats";
+			break;
+
+		case "mains":
+			stats = await getServerMainWeaponStats(guildId);
+			title = "Main weapon stats";
+			break;
+
+		default:
+			break;
+	}
+
+	const content = stats
+		.map(
+			(stat) =>
+				`${getWeaponEmojiShortcode(stat.weapon)} ${stat.weapon}: ${
+					stat.count
+				} (${stat.percentage.toFixed(0)}%)`
+		)
+		.join("\n");
+
+	return res.send({
+		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+		data: {
+			embeds: [
+				{
+					title,
+					color: 0x6fa8dc,
+					fields: [
+						{
+							name: "",
+							value: content,
+						},
+					],
+				},
+			],
 		},
 	});
 };

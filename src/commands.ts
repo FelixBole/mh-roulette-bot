@@ -4,7 +4,7 @@ import { WEAPONS } from "./data/weapons.js";
 
 export const COMMAND_NAMES = {
 	BAN_MULTIPLE_WEAPONS: "mhr_ban",
-	BAN_WEAPON: "mhr_ban_single",
+	// BAN_WEAPON: "mhr_ban_single",
 	UNBAN_ALL_WEAPONS: "mhr_unban_all",
 	LIST_USER_BANNED_WEAPONS: "mhr_list",
 	GET_RANDOM_WEAPON: "mhr_rnd",
@@ -16,6 +16,11 @@ export const COMMAND_NAMES = {
 	SET_MAIN_WEAPON: "mhr_set_main",
 	FAVORITE_WEAPONS: "mhr_set_fav",
 	USER_RESET: "mhr_user_reset_stats",
+
+	GET_SERVER_WEAPON_DRAW_STATS: "mhr_stats_server_draws",
+	GET_SERVER_WEAPON_BAN_STATS: "mhr_stats_server_bans",
+	GET_SERVER_WEAPON_POPULARITY_STATS: "mhr_stats_server_popularity",
+	GET_SERVER_WEAPON_MAIN_STATS: "mhr_stats_server_mains",
 
 	CREATE_PARTY: "mhr_create_party",
 
@@ -44,22 +49,22 @@ const LIST_USER_BANNED_WEAPONS = {
 	contexts: [0, 1, 2],
 };
 
-const BAN_WEAPON = {
-	name: COMMAND_NAMES.BAN_WEAPON,
-	description: "Ban a weapon",
-	options: [
-		{
-			type: 3,
-			name: "weapon",
-			description: "Weapon to ban",
-			required: true,
-			choices: createWeaponChoices(),
-		},
-	],
-	type: 1,
-	integration_types: [0, 1],
-	contexts: [0, 1, 2],
-};
+// const BAN_WEAPON = {
+// 	name: COMMAND_NAMES.BAN_WEAPON,
+// 	description: "Ban a weapon",
+// 	options: [
+// 		{
+// 			type: 3,
+// 			name: "weapon",
+// 			description: "Weapon to ban",
+// 			required: true,
+// 			choices: createWeaponChoices(),
+// 		},
+// 	],
+// 	type: 1,
+// 	integration_types: [0, 1],
+// 	contexts: [0, 1, 2],
+// };
 
 const BAN_MULTIPLE_WEAPONS = {
 	name: COMMAND_NAMES.BAN_MULTIPLE_WEAPONS,
@@ -167,6 +172,41 @@ const USER_RESET = {
 };
 
 /**
+ * Stats COMMANDS
+ */
+const GET_SERVER_WEAPON_DRAW_STATS = {
+	name: COMMAND_NAMES.GET_SERVER_WEAPON_DRAW_STATS,
+	description: "Get weapon draw stats for server",
+	type: 1,
+	integration_types: [0, 1],
+	contexts: [0, 1, 2],
+};
+
+const GET_SERVER_WEAPON_BAN_STATS = {
+	name: COMMAND_NAMES.GET_SERVER_WEAPON_BAN_STATS,
+	description: "Get server weapon ban stats",
+	type: 1,
+	integration_types: [0, 1],
+	contexts: [0, 1, 2],
+};
+
+const GET_SERVER_WEAPON_POPULARITY_STATS = {
+	name: COMMAND_NAMES.GET_SERVER_WEAPON_POPULARITY_STATS,
+	description: "Get server weapon popularity stats (from favorites)",
+	type: 1,
+	integration_types: [0, 1],
+	contexts: [0, 1, 2],
+};
+
+const GET_SERVER_WEAPON_MAIN_STATS = {
+	name: COMMAND_NAMES.GET_SERVER_WEAPON_MAIN_STATS,
+	description: "Get disparity between main weapons in the server",
+	type: 1,
+	integration_types: [0, 1],
+	contexts: [0, 1, 2],
+};
+
+/**
  * PARTY COMMANDS
  */
 // const CREATE_PARTY = {
@@ -188,7 +228,7 @@ const HELP = {
 const ALL_COMMANDS = [
 	LIST_USER_BANNED_WEAPONS,
 	BAN_MULTIPLE_WEAPONS,
-	BAN_WEAPON,
+	// BAN_WEAPON,
 	UNBAN_ALL_WEAPONS,
 	GET_RANDOM_WEAPON,
 	GET_MULTI_RANDOM_WEAPONS,
@@ -199,6 +239,11 @@ const ALL_COMMANDS = [
 
 	USER_SUMMARY,
 	// USER_RESET,
+
+	GET_SERVER_WEAPON_DRAW_STATS,
+	GET_SERVER_WEAPON_BAN_STATS,
+	GET_SERVER_WEAPON_POPULARITY_STATS,
+	GET_SERVER_WEAPON_MAIN_STATS,
 
 	// CREATE_PARTY,
 

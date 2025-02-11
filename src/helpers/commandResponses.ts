@@ -27,7 +27,7 @@ export const generateMultiWeaponBanResponse = (userId: string) => {
 					components: [
 						{
 							type: MessageComponentTypes.STRING_SELECT,
-							custom_id: `weapon_select_ban${userId}`,
+							custom_id: `weapon_select_ban_${userId}`,
 							options: Object.keys(WEAPONS).map((weapon) => ({
 								label: `${weapon} - ${WEAPONS[weapon]}`,
 								value: weapon,
@@ -193,7 +193,6 @@ export const generateHelpResponse = () => {
 
 **Banning Weapons**
 - \`/${COMMAND_NAMES.BAN_MULTIPLE_WEAPONS}\`: Set your banned weapons
-- \`/${COMMAND_NAMES.BAN_WEAPON}\`: Add a banned weapon to your banned list
 - \`/${COMMAND_NAMES.LIST_USER_BANNED_WEAPONS}\`: List your banned weapons
 - \`/${COMMAND_NAMES.UNBAN_ALL_WEAPONS}\`: Unban all weapons
 
@@ -201,6 +200,12 @@ export const generateHelpResponse = () => {
 - \`/${COMMAND_NAMES.USER_SUMMARY}\`: Get a summary of your stats
 - \`/${COMMAND_NAMES.SET_MAIN_WEAPON}\`: Set your main weapon
 - \`/${COMMAND_NAMES.FAVORITE_WEAPONS}\`: Set your favorite weapons
+
+**Server Stats**
+- \`/${COMMAND_NAMES.GET_SERVER_WEAPON_DRAW_STATS}\`: Get the weapon draw stats for the server
+- \`/${COMMAND_NAMES.GET_SERVER_WEAPON_BAN_STATS}\`: Get the weapon ban stats for the server
+- \`/${COMMAND_NAMES.GET_SERVER_WEAPON_POPULARITY_STATS}\`: Get the weapon popularity stats for the server
+- \`/${COMMAND_NAMES.GET_SERVER_WEAPON_MAIN_STATS}\`: Get the weapon main stats for the server
 
 **Other**
 - \`/${COMMAND_NAMES.HELP}\`: Show this message`,
