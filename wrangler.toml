@@ -1,4 +1,0 @@
-name = "mh-roulette-bot"
-main = "dist/index.js"
-compatibility_date = "2025-02-11"
-compatibility_flags = ["nodejs_compat"]
