@@ -1,0 +1,33 @@
+export const WEAPONS: { [key: string]: string } = {
+	GS: "Great Sword",
+	LS: "Long Sword",
+	SnS: "Sword and Shield",
+	DB: "Dual Blades",
+	Hammer: "Hammer",
+	HH: "Hunting Horn",
+	Lance: "Lance",
+	GL: "Gunlance",
+	SA: "Switch Axe",
+	CB: "Charge Blade",
+	IG: "Insect Glaive",
+	Bow: "Bow",
+	LBG: "Light Bowgun",
+	HBG: "Heavy Bowgun",
+} as const;
+
+export const WEAPON_IMAGES: { [key: string]: string } = {
+	GS: "https://i.imgur.com/v7LAKBx.png",
+	LS: "https://i.imgur.com/E75NW6c.png",
+	SnS: "https://i.imgur.com/pwEwovP.png",
+	DB: "https://i.imgur.com/MejhBHe.png",
+	Hammer: "https://i.imgur.com/3xbUPuV.png",
+	HH: "https://i.imgur.com/DaThhYu.png",
+	Lance: "https://i.imgur.com/qWEBjo8.png",
+	GL: "https://i.imgur.com/fwjewam.png",
+	SA: "https://i.imgur.com/wmnbvT1.png",
+	CB: "https://i.imgur.com/7Hnkvrf.png",
+	IG: "https://i.imgur.com/Yb5jw1J.png",
+	Bow: "https://i.imgur.com/ZBn2Lfc.png",
+	LBG: "https://i.imgur.com/BhHAGA6.png",
+	HBG: "https://i.imgur.com/loXyOgZ.png",
+} as const;
