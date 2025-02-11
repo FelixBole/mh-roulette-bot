@@ -1,0 +1,4 @@
+name = "mhroulette-worker"
+main = "dist/index.js"
+type = "module"
+compatibility_date = "2025-02-11"

@@ -11,6 +11,7 @@
     "start": "node dist/index.js",
     "register": "tsx src/commands.ts",
     "dev": "nodemon",
+    "clean": "rimraf dist",
     "build": "tsc",
     "publish": "wrangler publish"
   },
@@ -26,6 +27,7 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.1",
     "nodemon": "^3.0.0",
+    "rimraf": "^6.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "wrangler": "^3.107.3"
