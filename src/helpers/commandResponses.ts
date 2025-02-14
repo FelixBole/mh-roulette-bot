@@ -109,6 +109,39 @@ export const generateRandomWeaponResponse = (
 };
 
 /**
+ * Generates the discord embed for the random weapon combo command
+ */
+export const generateRandomWeaponComboResponse = ({
+	weapon1,
+	weapon2,
+}: {
+	weapon1: { name: string; draws: number };
+	weapon2: { name: string; draws: number };
+}) => {
+	return {
+		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+		data: {
+			embeds: [
+				{
+					title: `${getWeaponEmojiShortcode(weapon1.name)} ${
+						WEAPONS[weapon1.name]
+					}`,
+					color: 0x6fa8dc,
+					description: `${getWeaponEmojiShortcode(`
+						${weapon2.name}
+					`)} ${WEAPONS[weapon2.name]} for the Seikret !`,
+					footer: {
+						text: `Draws: ${getWeaponEmojiShortcode(weapon1.name)} ${
+							weapon1.draws
+						} • ${getWeaponEmojiShortcode(weapon2.name)} ${weapon2.draws}`,
+					},
+				},
+			],
+		},
+	};
+};
+
+/**
  * Generates the discord response for the user recap command
  *
  * @param user The user object
@@ -185,6 +218,7 @@ export const generateHelpResponse = () => {
 
 **Randomizer**
 - \`/${COMMAND_NAMES.GET_RANDOM_WEAPON}\`: Get a random weapon
+- \`/${COMMAND_NAMES.GET_2_RANDOM_WEAPONS}\`: Get 2 random weapons, one on you and one on the Seikret !
 - \`/${COMMAND_NAMES.GET_MULTI_RANDOM_WEAPONS}\`: Get multiple random weapons
 *note: This will add all weapons drawned to your stats*
 - \`/${COMMAND_NAMES.GET_RANDOM_WEAPON_FROM_FAV}\`: Get a random weapon from your favorites

@@ -10,6 +10,7 @@ import {
 	generateHelpResponse,
 	generateMultiWeaponBanResponse,
 	generateMultiWeaponFavoriteResponse,
+	generateRandomWeaponComboResponse,
 	generateRandomWeaponResponse,
 	generateUserRecap,
 } from "../helpers/commandResponses";
@@ -146,6 +147,9 @@ export const handleInteractions = async (
 
 		if (name === COMMAND_NAMES.GET_RANDOM_WEAPON)
 			return handleGetRandomWeapon(res, userId, user);
+
+		if (name === COMMAND_NAMES.GET_2_RANDOM_WEAPONS)
+			return handleGet2RandomWeapons(res, data, user);
 
 		if (name === COMMAND_NAMES.GET_MULTI_RANDOM_WEAPONS)
 			return handleGetMultiRandomWeapons(res, data, user);
@@ -311,6 +315,28 @@ const handleSetMainWeapon = async (
 			flags: InteractionResponseFlags.EPHEMERAL,
 		},
 	});
+};
+
+const handleGet2RandomWeapons = async (
+	res: Response,
+	data: any,
+	user: HydratedDocument<IUser>
+) => {
+	const draw = Array.from({ length: 2 }, () => getRandomWeaponForUser(user));
+
+	const updatedUser = await updateUserMultipleWeaponStats(user.id, draw, user);
+
+	const weapons = draw.map((weapon) => ({
+		name: weapon,
+		draws: getUserWeaponDrawAmount(updatedUser, weapon),
+	}));
+
+	return res.send(
+		generateRandomWeaponComboResponse({
+			weapon1: weapons[0],
+			weapon2: weapons[1],
+		})
+	);
 };
 
 const handleGetMultiRandomWeapons = async (

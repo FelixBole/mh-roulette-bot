@@ -8,10 +8,11 @@ export const COMMAND_NAMES = {
 	UNBAN_ALL_WEAPONS: "mhr_unban_all",
 	LIST_USER_BANNED_WEAPONS: "mhr_list",
 	GET_RANDOM_WEAPON: "mhr_rnd",
+	GET_2_RANDOM_WEAPONS: "mhr_r2",
 	GET_MULTI_RANDOM_WEAPONS: "mhr_rndx",
 	GET_RANDOM_WEAPON_FROM_FAV: "mhr_rnd_fav",
 	GET_MULTI_RANDOM_WEAPONS_FROM_FAV: "mhr_rndx_fav",
-	
+
 	USER_SUMMARY: "mhr_user_summary",
 	SET_MAIN_WEAPON: "mhr_set_main",
 	FAVORITE_WEAPONS: "mhr_set_fav",
@@ -85,6 +86,14 @@ const UNBAN_ALL_WEAPONS = {
 const GET_RANDOM_WEAPON = {
 	name: COMMAND_NAMES.GET_RANDOM_WEAPON,
 	description: "Get a random weapon",
+	type: 1,
+	integration_types: [0, 1],
+	contexts: [0, 1, 2],
+};
+
+const GET_2_RANDOM_WEAPONS = {
+	name: COMMAND_NAMES.GET_2_RANDOM_WEAPONS,
+	description: "Get 2 random weapons. One on you, and one for the Seikret !",
 	type: 1,
 	integration_types: [0, 1],
 	contexts: [0, 1, 2],
@@ -231,6 +240,7 @@ const ALL_COMMANDS = [
 	// BAN_WEAPON,
 	UNBAN_ALL_WEAPONS,
 	GET_RANDOM_WEAPON,
+	GET_2_RANDOM_WEAPONS,
 	GET_MULTI_RANDOM_WEAPONS,
 	GET_RANDOM_WEAPON_FROM_FAV,
 	GET_MULTI_RANDOM_WEAPONS_FROM_FAV,

@@ -1,34 +1,33 @@
 {
-  "name": "mh-roulette-bot",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Discord bot for Monster Hunter weapon randomizer",
-  "main": "dist/index.js",
-  "engines": {
-    "node": ">=18.x"
-  },
-  "scripts": {
-    "start": "node dist/index.js",
-    "register": "tsx src/commands.ts",
-    "dev": "nodemon",
-    "clean": "rimraf dist",
-    "build": "tsc",
-    "publish": "wrangler publish"
-  },
-  "author": "Felix Bole",
-  "license": "MIT",
-  "dependencies": {
-    "discord-interactions": "^4.0.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "mongoose": "^8.10.0"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.13.1",
-    "nodemon": "^3.0.0",
-    "rimraf": "^6.0.1",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
-  }
+	"name": "mh-roulette-bot",
+	"private": true,
+	"version": "1.0.0",
+	"description": "Discord bot for Monster Hunter weapon randomizer",
+	"main": "dist/index.js",
+	"engines": {
+		"node": ">=18.x"
+	},
+	"scripts": {
+		"start": "node dist/index.js",
+		"register": "tsx src/commands.ts",
+		"dev": "nodemon",
+		"clean": "rimraf dist",
+		"build": "tsc"
+	},
+	"author": "Felix Bole",
+	"license": "MIT",
+	"dependencies": {
+		"discord-interactions": "^4.0.0",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"mongoose": "^8.10.0"
+	},
+	"devDependencies": {
+		"@types/express": "^5.0.0",
+		"@types/node": "^22.13.1",
+		"nodemon": "^3.0.0",
+		"rimraf": "^6.0.1",
+		"tsx": "^4.19.2",
+		"typescript": "^5.7.3"
+	}
 }
