@@ -127,14 +127,9 @@ export const generateRandomWeaponComboResponse = ({
 						WEAPONS[weapon1.name]
 					}`,
 					color: 0x6fa8dc,
-					description: `${getWeaponEmojiShortcode(`
-						${weapon2.name}
-					`)} ${WEAPONS[weapon2.name]} for the Seikret !`,
-					footer: {
-						text: `Draws: ${getWeaponEmojiShortcode(weapon1.name)} ${
-							weapon1.draws
-						} • ${getWeaponEmojiShortcode(weapon2.name)} ${weapon2.draws}`,
-					},
+					description: `${getWeaponEmojiShortcode(`${weapon2.name}`)} ${
+						WEAPONS[weapon2.name]
+					} for the Seikret !`,
 				},
 			],
 		},
